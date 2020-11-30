@@ -51,14 +51,21 @@ function sayingAndDisplaying(event) {
   }
 }
 
+function recyclePhrases() {
+  viewedPhrases.forEach(function(phrase) {
+  phrases.push(phrase);
+});
+};
+
 function noRepeatingMessagesUntilAllAreViewed(phrases, viewedPhrases) {
   if (phrases.includes(messageToBeViewed)) {
     viewedPhrases.push(messageToBeViewed);
     phrases.splice(phrases.indexOf(messageToBeViewed), 1);
     if (!phrases.length) {
-      for (var i = 0; i < viewedPhrases.length; i++) {
-        phrases.push(viewedPhrases[i]);
-      }
+      recyclePhrases();
+      // for (var i = 0; i < viewedPhrases.length; i++) {
+      //   phrases.push(viewedPhrases[i]);
+      // }
       window.alert('This category of messages has been exhausted and will now begin to repeat.');
       viewedPhrases.splice(0);
     }
