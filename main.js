@@ -38,17 +38,24 @@ var previouslyViewedAffirmations = [];
 
 function sayingAndDisplaying(event) {
   event.preventDefault();
-  for (var i = 0; i < messageSelect.length; i++) {
-    if (messageSelect[i].checked === true) {
-      if (messageSelect[i].value === "radio-left") {
-         messageReturn.innerHTML = `<p class="message-align">${getRandomPhrase(affirmations)}</p>`;
-         noRepeatingMessagesUntilAllAreViewed(affirmations, previouslyViewedAffirmations);
-       } else if (messageSelect[i].value === "radio-right") {
-         messageReturn.innerHTML = `<p class="message-align">${getRandomPhrase(mantras)}</p>`;
-         noRepeatingMessagesUntilAllAreViewed(mantras, previouslyViewedMantras);
-      }
+  displayAppropriateMessage();
+};
+
+function displayAppropriateMessage() {
+  messageSelect.forEach(message => {
+    if (message.checked === true && message.value === 'radio-left') {
+      messageReturn.innerHTML = `<p class="message-align">${getRandomPhrase(affirmations)}</p>`;
+      noRepeatingMessagesUntilAllAreViewed(affirmations, previouslyViewedAffirmations);
+    } else if (message.checked === true && message.value === 'radio-right') {
+      messageReturn.innerHTML = `<p class="message-align">${getRandomPhrase(mantras)}</p>`;
+      noRepeatingMessagesUntilAllAreViewed(mantras, previouslyViewedMantras);
     }
-  }
+  });
+};
+
+function resetPhrases(phrases, viewedPhrases) {
+  viewedPhrases.forEach(element =>
+  phrases.push(element));
 }
 
 function noRepeatingMessagesUntilAllAreViewed(phrases, viewedPhrases) {
@@ -56,9 +63,7 @@ function noRepeatingMessagesUntilAllAreViewed(phrases, viewedPhrases) {
     viewedPhrases.push(messageToBeViewed);
     phrases.splice(phrases.indexOf(messageToBeViewed), 1);
     if (!phrases.length) {
-      for (var i = 0; i < viewedPhrases.length; i++) {
-        phrases.push(viewedPhrases[i]);
-      }
+      resetPhrases(phrases, viewedPhrases)
       window.alert('This category of messages has been exhausted and will now begin to repeat.');
       viewedPhrases.splice(0);
     }
