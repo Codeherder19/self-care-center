@@ -41,7 +41,7 @@ function sayingAndDisplaying(event) {
   displayAppropriateMessage();
 };
 
-function displayAppropriateMessage() {
+const displayAppropriateMessage = () => {
   messageSelect.forEach(message => {
     if (message.checked === true && message.value === 'radio-left') {
       messageReturn.innerHTML = `<p class="message-align">${getRandomPhrase(affirmations)}</p>`;
@@ -53,12 +53,12 @@ function displayAppropriateMessage() {
   });
 };
 
-function resetPhrases(phrases, viewedPhrases) {
+const resetPhrases = (phrases, viewedPhrases) => {
   viewedPhrases.forEach(element =>
   phrases.push(element));
-}
+};
 
-function noRepeatingMessagesUntilAllAreViewed(phrases, viewedPhrases) {
+const noRepeatingMessagesUntilAllAreViewed = (phrases, viewedPhrases) => {
   if (phrases.includes(messageToBeViewed)) {
     viewedPhrases.push(messageToBeViewed);
     phrases.splice(phrases.indexOf(messageToBeViewed), 1);
@@ -68,14 +68,14 @@ function noRepeatingMessagesUntilAllAreViewed(phrases, viewedPhrases) {
       viewedPhrases.splice(0);
     }
   }
-}
+};
 
-function getRandomIndex(phrase) {
+const getRandomIndex = phrase => {
   return Math.floor(Math.random() * phrase.length);
-}
+};
 
-function getRandomPhrase(sayings) {
+const getRandomPhrase = sayings => {
   var randomSaying = sayings[getRandomIndex(sayings)];
   messageToBeViewed = randomSaying;
   return randomSaying;
-}
+};
